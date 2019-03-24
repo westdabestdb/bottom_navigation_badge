@@ -1,15 +1,57 @@
-# bottom_navigation_badge
+# bottom_navigation_badge / BottomNavigationBadge
+BottomNavigationBadge is a Flutter widget developed by [westdabestdb](https://www.instagram.com/westdabestdb/).
 
-A new Flutter package project.
-
+![](https://media.giphy.com/media/42vZBDJcxd97IHro95/giphy.gif)
 ## Getting Started
+Add this to your package's `pubspec.yaml` file:
+```
+...
+dependencies:
+  bottom_navigation_badge: ^1.0.0
+```
 
-This project is a starting point for a Dart
-[package](https://flutter.io/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+Now in your Dart code, you can use:
+```
+import 'package:bottom_navigation_badge/bottom_navigation_badge.dart';
+```
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
-# bottom_navigation_badge
+## Usage
+Initialize the badger. Isn't it a nice variable name lol.
+```
+BottomNavigationBadge badger = new BottomNavigationBadge(
+  backgroundColor: Colors.red,
+  badgeShape: BottomNavigationBadgeShape.circle,
+  textColor: Colors.white,
+  position: BottomNavigationBadgePosition.topRight,
+  textSize: 8);
+```
+
+Create a list of BottomNavigationItems
+```
+List<BottomNavigationBarItem> items = [
+  BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("Home")),
+  BottomNavigationBarItem(icon: Icon(Icons.notifications), title: Text("Notifications")),
+  BottomNavigationBarItem(icon: Icon(Icons.face), title: Text("Profile"))
+];
+```
+
+Add badge to index with content "1"
+```
+setState(() {
+  items = badger.setBadge(items, "1", index);
+});
+```
+
+Remove the badge at index
+```
+setState(() {
+  items = badger.removeBadge(items, index);
+});
+```
+
+Remove all the badges
+```
+setState(() {
+  items = badger.removeAll(items);
+});
+```
