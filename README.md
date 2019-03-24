@@ -1,5 +1,5 @@
 # bottom_navigation_badge / BottomNavigationBadge
-BottomNavigationBadge is a Flutter widget developed by [westdabestdb](https://www.instagram.com/westdabestdb/).
+BottomNavigationBadge is a Flutter class developed by [westdabestdb](https://www.instagram.com/westdabestdb/).
 
 ![](https://media.giphy.com/media/42vZBDJcxd97IHro95/giphy.gif)
 ## Getting Started
