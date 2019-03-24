@@ -26,7 +26,7 @@ BottomNavigationBadge badger = new BottomNavigationBadge(
   textSize: 8);
 ```
 
-Create a list of BottomNavigationItems
+Create a list of BottomNavigationBarItems
 ```
 List<BottomNavigationBarItem> items = [
   BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("Home")),
