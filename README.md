@@ -16,7 +16,7 @@ import 'package:bottom_navigation_badge/bottom_navigation_badge.dart';
 ```
 
 ## Usage
-Initialize the badger. Isn't it a nice variable name lol.
+Initialize the badger. Isn't it a nice variable name lol 😁
 ```
 BottomNavigationBadge badger = new BottomNavigationBadge(
   backgroundColor: Colors.red,
