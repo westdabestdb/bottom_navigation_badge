@@ -1,5 +1,7 @@
 library bottom_navigation_badge;
+
 import 'package:flutter/material.dart';
+
 enum BottomNavigationBadgeShape {
   circle,
   square,
@@ -57,33 +59,35 @@ class BottomNavigationBadge {
 //  }
 
   List setBadge(List items, String content, int index) {
-    Widget badge = content == null ? null : new Positioned(
-      top: _top,
-      right: 0,
-      child: new Container(
-        height: 14,
-        width: 14,
-        padding: EdgeInsets.all(1),
-        decoration: new BoxDecoration(
-          color: backgroundColor ?? Colors.red,
-          borderRadius: setBorder(),
-        ),
-        constraints: BoxConstraints(
-          minWidth: 14,
-          minHeight: 14,
-        ),
-        child: Center(
-          child: new Text(
-            '$content',
-            style: new TextStyle(
-              color: textColor ?? Colors.white,
-              fontSize: textSize ?? 8,
+    Widget badge = content == null
+        ? null
+        : new Positioned(
+            top: _top,
+            right: 0,
+            child: new Container(
+              height: 14,
+              width: 14,
+              padding: EdgeInsets.all(1),
+              decoration: new BoxDecoration(
+                color: backgroundColor ?? Colors.red,
+                borderRadius: setBorder(),
+              ),
+              constraints: BoxConstraints(
+                minWidth: 14,
+                minHeight: 14,
+              ),
+              child: Center(
+                child: new Text(
+                  '$content',
+                  style: new TextStyle(
+                    color: textColor ?? Colors.white,
+                    fontSize: textSize ?? 8,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ),
-    );
+          );
     BottomNavigationBarItem _replacer = BottomNavigationBarItem(
         icon: new Stack(children: <Widget>[items[index].icon, badge]),
         title: items[index].title,
@@ -95,19 +99,19 @@ class BottomNavigationBadge {
   }
 
   List removeBadge(List items, int index) {
-      BottomNavigationBarItem _replacer = BottomNavigationBarItem(
-          icon: items[index].icon.children[0],
-          title: items[index].title,
-          activeIcon: items[index].activeIcon.children[0],
-          backgroundColor: items[index].backgroundColor);
-      items.removeAt(index);
-      items.insert(index, _replacer);
+    BottomNavigationBarItem _replacer = BottomNavigationBarItem(
+        icon: items[index].icon.children[0],
+        title: items[index].title,
+        activeIcon: items[index].activeIcon.children[0],
+        backgroundColor: items[index].backgroundColor);
+    items.removeAt(index);
+    items.insert(index, _replacer);
     return items;
   }
 
   List removeAll(List items) {
-    for(var i = 0; i < items.length; i++){
-      if(items[i].icon is Stack) {
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].icon is Stack) {
         BottomNavigationBarItem _replacer = BottomNavigationBarItem(
             icon: items[i].icon.children[0],
             title: items[i].title,
