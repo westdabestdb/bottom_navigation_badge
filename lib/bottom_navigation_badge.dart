@@ -28,7 +28,7 @@ class BottomNavigationBadge {
   BottomNavigationBadgePosition position;
 
   BorderRadius _radius;
-  double _left, _right, _top, _bottom;
+  Alignment alignment;
 
   BottomNavigationBadge(
       {this.backgroundColor,
@@ -48,50 +48,66 @@ class BottomNavigationBadge {
     return _radius;
   }
 
-//  setPosition() {
-//    if (position == BottomNavigationBadgePosition.topLeft) {
-//      _left = 0;
-//      _top = 0;
-//    } else if (position == BottomNavigationBadgePosition.topCenter) {
-//      _left = 5;
-//      _top = 0;
-//    }
-//  }
+  Alignment setPosition() {
+    if (position == BottomNavigationBadgePosition.topLeft) {
+      alignment = Alignment.topLeft;
+    } else if (position == BottomNavigationBadgePosition.topCenter) {
+      alignment = Alignment.topCenter;
+    } else if (position == BottomNavigationBadgePosition.topRight) {
+      alignment = Alignment.topRight;
+    } else if (position == BottomNavigationBadgePosition.centerLeft) {
+      alignment = Alignment.centerLeft;
+    } else if (position == BottomNavigationBadgePosition.center) {
+      alignment = Alignment.center;
+    } else if (position == BottomNavigationBadgePosition.centerRight) {
+      alignment = Alignment.centerRight;
+    } else if (position == BottomNavigationBadgePosition.bottomLeft) {
+      alignment = Alignment.bottomLeft;
+    } else if (position == BottomNavigationBadgePosition.bottomCenter) {
+      alignment = Alignment.bottomCenter;
+    } else if (position == BottomNavigationBadgePosition.bottomRight) {
+      alignment = Alignment.bottomRight;
+    }
+    return alignment;
+  }
 
   List setBadge(List items, String content, int index) {
     Widget badge = content == null
         ? null
-        : new Positioned(
-            top: _top,
-            right: 0,
-            child: new Container(
-              height: 14,
-              width: 14,
-              padding: EdgeInsets.all(1),
-              decoration: new BoxDecoration(
-                color: backgroundColor ?? Colors.red,
-                borderRadius: setBorder(),
-              ),
-              constraints: BoxConstraints(
-                minWidth: 14,
-                minHeight: 14,
-              ),
-              child: Center(
-                child: new Text(
-                  '$content',
-                  style: new TextStyle(
-                    color: textColor ?? Colors.white,
-                    fontSize: textSize ?? 8,
-                  ),
-                  textAlign: TextAlign.center,
+        : new Container(
+            height: 14,
+            width: 14,
+            decoration: new BoxDecoration(
+              color: backgroundColor ?? Colors.red,
+              borderRadius: setBorder(),
+            ),
+            constraints: BoxConstraints(
+              minWidth: 14,
+              minHeight: 14,
+            ),
+            child: Center(
+              child: new Text(
+                '$content',
+                style: new TextStyle(
+                  color: textColor ?? Colors.white,
+                  fontSize: textSize ?? 8,
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
           );
     BottomNavigationBarItem _replacer = BottomNavigationBarItem(
-        icon: new Stack(children: <Widget>[items[index].icon, badge]),
+        icon: Stack(
+          children: <Widget>[items[index].icon, badge],
+          alignment: setPosition(),
+          overflow: Overflow.visible,
+        ),
         title: items[index].title,
-        activeIcon: new Stack(children: <Widget>[items[index].icon, badge]),
+        activeIcon: new Stack(
+          children: <Widget>[items[index].icon, badge],
+          alignment: setPosition(),
+          overflow: Overflow.visible,
+        ),
         backgroundColor: items[index].backgroundColor);
     items.removeAt(index);
     items.insert(index, _replacer);
