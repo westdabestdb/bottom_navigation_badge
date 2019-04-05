@@ -21,7 +21,7 @@ packages:
       name: bottom_navigation_badge
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.2"
   charcode:
     dependency: transitive
     description:

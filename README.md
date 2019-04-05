@@ -7,7 +7,7 @@ Add this to your package's `pubspec.yaml` file:
 ```
 ...
 dependencies:
-  bottom_navigation_badge: ^1.0.1
+  bottom_navigation_badge: ^1.0.3
 ```
 
 Now in your Dart code, you can use:

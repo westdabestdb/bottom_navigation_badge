@@ -1,6 +1,6 @@
 name: bottom_navigation_badge
 description: BottomNavigationBadge is a Flutter widget developed by westdabestdb that allows developers to add notification badges to bottom navigation bar items.
-version: 1.0.2
+version: 1.0.3
 author: westdabestdb <westdabestdb@gmail.com>
 homepage: https://github.com/westdabestdb/bottom_navigation_badge
 
