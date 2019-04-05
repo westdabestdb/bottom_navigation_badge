@@ -98,13 +98,27 @@ class BottomNavigationBadge {
           );
     BottomNavigationBarItem _replacer = BottomNavigationBarItem(
         icon: Stack(
-          children: <Widget>[items[index].icon, badge],
+          children: <Widget>[
+            Container(
+              child: items[index].icon,
+              height: 24,
+              width: 36,
+            ),
+            badge
+          ],
           alignment: setPosition(),
           overflow: Overflow.visible,
         ),
         title: items[index].title,
         activeIcon: new Stack(
-          children: <Widget>[items[index].icon, badge],
+          children: <Widget>[
+            Container(
+              child: items[index].icon,
+              height: 24,
+              width: 36,
+            ),
+            badge
+          ],
           alignment: setPosition(),
           overflow: Overflow.visible,
         ),
@@ -115,13 +129,15 @@ class BottomNavigationBadge {
   }
 
   List removeBadge(List items, int index) {
-    BottomNavigationBarItem _replacer = BottomNavigationBarItem(
-        icon: items[index].icon.children[0],
-        title: items[index].title,
-        activeIcon: items[index].activeIcon.children[0],
-        backgroundColor: items[index].backgroundColor);
-    items.removeAt(index);
-    items.insert(index, _replacer);
+    if (items[index].icon is Stack) {
+      BottomNavigationBarItem _replacer = BottomNavigationBarItem(
+          icon: items[index].icon.children[0].child,
+          title: items[index].title,
+          activeIcon: items[index].activeIcon.children[0].child,
+          backgroundColor: items[index].backgroundColor);
+      items.removeAt(index);
+      items.insert(index, _replacer);
+    }
     return items;
   }
 
