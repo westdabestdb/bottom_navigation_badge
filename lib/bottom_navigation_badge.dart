@@ -113,7 +113,7 @@ class BottomNavigationBadge {
         activeIcon: new Stack(
           children: <Widget>[
             Container(
-              child: items[index].icon,
+              child: items[index].activeIcon!=null?items[index].activeIcon:items[index].icon,
               height: 24,
               width: 36,
             ),
