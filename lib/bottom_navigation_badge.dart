@@ -71,7 +71,7 @@ class BottomNavigationBadge {
     return alignment;
   }
 
-  List setBadge(List items, String content, int index) {
+  List setBadge(List items, String content, int index, {Key key}) {
     Widget badge = content == null
         ? null
         : new Container(
@@ -88,6 +88,7 @@ class BottomNavigationBadge {
             child: Center(
               child: new Text(
                 '$content',
+                key: key,
                 style: new TextStyle(
                   color: textColor ?? Colors.white,
                   fontSize: textSize ?? 8,
