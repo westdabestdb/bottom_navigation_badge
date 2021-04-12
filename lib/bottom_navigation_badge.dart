@@ -109,7 +109,6 @@ class BottomNavigationBadge {
           alignment: setPosition(),
           overflow: Overflow.visible,
         ),
-        label: items[index].label,
         title: items[index].title,
         label: items[index].label,
         activeIcon: new Stack(
@@ -134,7 +133,6 @@ class BottomNavigationBadge {
     if (items[index].icon is Stack) {
       BottomNavigationBarItem _replacer = BottomNavigationBarItem(
           icon: items[index].icon.children[0].child,
-          label: items[index].label,
           title: items[index].title,
           label: items[index].label,
           activeIcon: items[index].activeIcon.children[0].child,
@@ -150,7 +148,6 @@ class BottomNavigationBadge {
       if (items[i].icon is Stack) {
         BottomNavigationBarItem _replacer = BottomNavigationBarItem(
             icon: items[i].icon.children[0],
-            label: items[i].label,
             title: items[i].title,
             label: items[i].label,
             activeIcon: items[i].activeIcon.children[0],
