@@ -34,9 +34,9 @@ class _MyHomePageState extends State<MyHomePage> {
       textSize: 8);
 
   List<BottomNavigationBarItem> items = [
-    BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("Home")),
-    BottomNavigationBarItem(icon: Icon(Icons.notifications), title: Text("Notifications")),
-    BottomNavigationBarItem(icon: Icon(Icons.face), title: Text("Profile"))
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+    BottomNavigationBarItem(icon: Icon(Icons.notifications), label: "Notifications"),
+    BottomNavigationBarItem(icon: Icon(Icons.face), label: "Profile")
   ];
   int? dropdownSelected = 0;
 
@@ -67,11 +67,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                   child: DropdownButton(
                     isExpanded: true,
-                    hint: items[dropdownSelected!].title,
+                    hint: Text(items[dropdownSelected!].label!),
                     items:items.map((BottomNavigationBarItem item) {
                       return new DropdownMenuItem(
                         value: items.indexOf(item),
-                        child: item.title!,
+                        child: Text(item.label!),
                       );
                     }).toList(),
                     onChanged: (int? i){
@@ -96,8 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Row(
             children: <Widget>[
               Expanded(
-                child: RaisedButton(
-                  elevation: 0,
+                child: ElevatedButton(
                   child: Text("Add Badge"),
                   onPressed: (){
                     String s = _textEditingController.text;
@@ -108,8 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Expanded(
-                child: RaisedButton(
-                  elevation: 0,
+                child: ElevatedButton(
                   child: Text("Remove"),
                   onPressed: (){
                     setState(() {
@@ -119,8 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Expanded(
-                child: RaisedButton(
-                  elevation: 0,
+                child: ElevatedButton(
                   child: Text("Remove All"),
                   onPressed: (){
                     setState(() {
