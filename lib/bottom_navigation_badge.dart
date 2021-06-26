@@ -21,14 +21,14 @@ enum BottomNavigationBadgePosition {
 }
 
 class BottomNavigationBadge {
-  Color backgroundColor;
-  Color textColor;
-  BottomNavigationBadgeShape badgeShape;
-  double textSize;
-  BottomNavigationBadgePosition position;
+  Color? backgroundColor;
+  Color? textColor;
+  BottomNavigationBadgeShape? badgeShape;
+  double? textSize;
+  BottomNavigationBadgePosition? position;
 
-  BorderRadius _radius;
-  Alignment alignment;
+  BorderRadius? _radius;
+  Alignment? alignment;
 
   BottomNavigationBadge(
       {this.backgroundColor,
@@ -37,7 +37,7 @@ class BottomNavigationBadge {
       this.position,
       this.textSize});
 
-  BorderRadius setBorder() {
+  BorderRadius? setBorder() {
     if (badgeShape == BottomNavigationBadgeShape.circle) {
       _radius = BorderRadius.circular(12);
     } else if (badgeShape == BottomNavigationBadgeShape.square) {
@@ -48,7 +48,7 @@ class BottomNavigationBadge {
     return _radius;
   }
 
-  Alignment setPosition() {
+  Alignment? setPosition() {
     if (position == BottomNavigationBadgePosition.topLeft) {
       alignment = Alignment.topLeft;
     } else if (position == BottomNavigationBadgePosition.topCenter) {
@@ -71,10 +71,9 @@ class BottomNavigationBadge {
     return alignment;
   }
 
-  List setBadge(List items, String content, int index) {
-    Widget badge = content == null
-        ? null
-        : new Container(
+  List setBadge(List items, String? content, int index) {
+    content ??= "";
+    Widget badge = new Container(
             height: 14,
             width: 14,
             decoration: new BoxDecoration(
@@ -106,7 +105,7 @@ class BottomNavigationBadge {
             ),
             badge
           ],
-          alignment: setPosition(),
+          alignment: setPosition()!,
           overflow: Overflow.visible,
         ),
         title: items[index].title,
@@ -120,7 +119,7 @@ class BottomNavigationBadge {
             ),
             badge
           ],
-          alignment: setPosition(),
+          alignment: setPosition()!,
           overflow: Overflow.visible,
         ),
         backgroundColor: items[index].backgroundColor);

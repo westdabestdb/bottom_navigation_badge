@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
     BottomNavigationBarItem(icon: Icon(Icons.notifications), title: Text("Notifications")),
     BottomNavigationBarItem(icon: Icon(Icons.face), title: Text("Profile"))
   ];
-  int dropdownSelected = 0;
+  int? dropdownSelected = 0;
 
   int _current = 0;
 
@@ -67,14 +67,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                   child: DropdownButton(
                     isExpanded: true,
-                    hint: items[dropdownSelected].title,
+                    hint: items[dropdownSelected!].title,
                     items:items.map((BottomNavigationBarItem item) {
                       return new DropdownMenuItem(
                         value: items.indexOf(item),
-                        child: item.title,
+                        child: item.title!,
                       );
                     }).toList(),
-                    onChanged: (int i){
+                    onChanged: (int? i){
                       setState(() {
                         dropdownSelected = i;
                       });
@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: (){
                     String s = _textEditingController.text;
                     setState(() {
-                      items = badger.setBadge(items, s, dropdownSelected);
+                      items = badger.setBadge(items, s, dropdownSelected!) as List<BottomNavigationBarItem>;
                     });
                   },
                 ),
@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text("Remove"),
                   onPressed: (){
                     setState(() {
-                      items = badger.removeBadge(items, dropdownSelected);
+                      items = badger.removeBadge(items, dropdownSelected!) as List<BottomNavigationBarItem>;
                     });
                   },
                 ),
@@ -124,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text("Remove All"),
                   onPressed: (){
                     setState(() {
-                      items = badger.removeAll(items);
+                      items = badger.removeAll(items) as List<BottomNavigationBarItem>;
                     });
                   },
                 ),
