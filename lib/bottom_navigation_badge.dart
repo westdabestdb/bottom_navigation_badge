@@ -140,7 +140,6 @@ class BottomNavigationBadge {
                 position: setPosition())
             : _BottomNavigationBadgeIconWrapper(
                 badge: badge, icon: old.icon, position: setPosition()),
-        title: old.title,
         label: old.label,
         activeIcon: (old.activeIcon is _BottomNavigationBadgeIconWrapper)
             ? _BottomNavigationBadgeIconWrapper(
@@ -163,7 +162,6 @@ class BottomNavigationBadge {
         old.activeIcon is _BottomNavigationBadgeIconWrapper) {
       BottomNavigationBarItem _replacer = BottomNavigationBarItem(
           icon: (old.icon as _BottomNavigationBadgeIconWrapper).icon,
-          title: old.title,
           label: old.label,
           activeIcon:
               (old.activeIcon as _BottomNavigationBadgeIconWrapper).icon,
