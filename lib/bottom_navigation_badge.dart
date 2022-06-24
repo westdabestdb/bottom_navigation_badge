@@ -42,7 +42,7 @@ class _BottomNavigationBadgeIconWrapper extends StatelessWidget {
         badge
       ],
       alignment: position!,
-      overflow: Overflow.visible,
+      clipBehavior: Clip.none,
     );
   }
 }
