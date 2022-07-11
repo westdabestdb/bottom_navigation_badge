@@ -20,15 +20,42 @@ enum BottomNavigationBadgePosition {
   bottomRight,
 }
 
-class BottomNavigationBadge {
-  Color backgroundColor;
-  Color textColor;
-  BottomNavigationBadgeShape badgeShape;
-  double textSize;
-  BottomNavigationBadgePosition position;
+/// The purpose of this wrapper is to distinguish normal
+/// BottomNavigationBarItem from edited BottomNavigationBarItem
+class _BottomNavigationBadgeIconWrapper extends StatelessWidget {
+  final Widget icon;
+  final Widget badge;
+  final Alignment? position;
 
-  BorderRadius _radius;
-  Alignment alignment;
+  const _BottomNavigationBadgeIconWrapper(
+      {required this.icon, required this.badge, required this.position});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Container(
+          child: icon,
+          height: 24,
+          width: 36,
+        ),
+        badge
+      ],
+      alignment: position!,
+      clipBehavior: Clip.none,
+    );
+  }
+}
+
+class BottomNavigationBadge {
+  Color? backgroundColor;
+  Color? textColor;
+  BottomNavigationBadgeShape? badgeShape;
+  double? textSize;
+  BottomNavigationBadgePosition? position;
+
+  BorderRadius? _radius;
+  Alignment? alignment;
 
   BottomNavigationBadge(
       {this.backgroundColor,
@@ -37,7 +64,7 @@ class BottomNavigationBadge {
       this.position,
       this.textSize});
 
-  BorderRadius setBorder() {
+  BorderRadius? setBorder() {
     if (badgeShape == BottomNavigationBadgeShape.circle) {
       _radius = BorderRadius.circular(12);
     } else if (badgeShape == BottomNavigationBadgeShape.square) {
@@ -48,7 +75,7 @@ class BottomNavigationBadge {
     return _radius;
   }
 
-  Alignment setPosition() {
+  Alignment? setPosition() {
     if (position == BottomNavigationBadgePosition.topLeft) {
       alignment = Alignment.topLeft;
     } else if (position == BottomNavigationBadgePosition.topCenter) {
@@ -71,94 +98,86 @@ class BottomNavigationBadge {
     return alignment;
   }
 
-  List setBadge(List items, String content, int index) {
-    Widget badge = content == null
-        ? null
-        : new Container(
-            height: 14,
-            width: 14,
-            decoration: new BoxDecoration(
-              color: backgroundColor ?? Colors.red,
-              borderRadius: setBorder(),
-            ),
-            constraints: BoxConstraints(
-              minWidth: 14,
-              minHeight: 14,
-            ),
-            child: Center(
-              child: new Text(
-                '$content',
-                style: new TextStyle(
-                  color: textColor ?? Colors.white,
-                  fontSize: textSize ?? 8,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          );
+  Widget getBadge(String? content) {
+    content ??= "";
+    return Container(
+      height: 14,
+      width: 14,
+      decoration: BoxDecoration(
+        color: backgroundColor ?? Colors.red,
+        borderRadius: setBorder(),
+      ),
+      constraints: BoxConstraints(
+        minWidth: 14,
+        minHeight: 14,
+      ),
+      child: Center(
+        child: new Text(
+          '$content',
+          style: new TextStyle(
+            color: textColor ?? Colors.white,
+            fontSize: textSize ?? 8,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
+  List<BottomNavigationBarItem> setBadge(
+      List<BottomNavigationBarItem> items, String? content, int index) {
+    BottomNavigationBarItem old = items[index];
+    Widget badge = getBadge(content);
+
     BottomNavigationBarItem _replacer = BottomNavigationBarItem(
-        icon: Stack(
-          children: <Widget>[
-            Container(
-              child: items[index].icon,
-              height: 24,
-              width: 36,
-            ),
-            badge
-          ],
-          alignment: setPosition(),
-          overflow: Overflow.visible,
-        ),
-        label: items[index].label,
-        title: items[index].title,
-        label: items[index].label,
-        activeIcon: new Stack(
-          children: <Widget>[
-            Container(
-              child: items[index].activeIcon==null?items[index].icon:items[index].activeIcon,
-              height: 24,
-              width: 36,
-            ),
-            badge
-          ],
-          alignment: setPosition(),
-          overflow: Overflow.visible,
-        ),
-        backgroundColor: items[index].backgroundColor);
+        // if: icon fild of BottomNavigationBarItem is Wrapper
+        // then: we extract Wrapper.icon and generate a new wrap
+        // else: wrap the given icon
+        icon: (old.icon is _BottomNavigationBadgeIconWrapper)
+            ? _BottomNavigationBadgeIconWrapper(
+                badge: badge,
+                icon: (old.icon as _BottomNavigationBadgeIconWrapper).icon,
+                position: setPosition())
+            : _BottomNavigationBadgeIconWrapper(
+                badge: badge, icon: old.icon, position: setPosition()),
+        label: old.label,
+        activeIcon: (old.activeIcon is _BottomNavigationBadgeIconWrapper)
+            ? _BottomNavigationBadgeIconWrapper(
+                badge: badge,
+                icon:
+                    (old.activeIcon as _BottomNavigationBadgeIconWrapper).icon,
+                position: setPosition())
+            : _BottomNavigationBadgeIconWrapper(
+                badge: badge, icon: old.activeIcon, position: setPosition()),
+        backgroundColor: old.backgroundColor);
     items.removeAt(index);
     items.insert(index, _replacer);
     return items;
   }
 
-  List removeBadge(List items, int index) {
-    if (items[index].icon is Stack) {
+  List<BottomNavigationBarItem> removeBadge(
+      List<BottomNavigationBarItem> items, int index) {
+    BottomNavigationBarItem old = items[index];
+    if (old.icon is _BottomNavigationBadgeIconWrapper &&
+        old.activeIcon is _BottomNavigationBadgeIconWrapper) {
       BottomNavigationBarItem _replacer = BottomNavigationBarItem(
-          icon: items[index].icon.children[0].child,
-          label: items[index].label,
-          title: items[index].title,
-          label: items[index].label,
-          activeIcon: items[index].activeIcon.children[0].child,
-          backgroundColor: items[index].backgroundColor);
+          icon: (old.icon as _BottomNavigationBadgeIconWrapper).icon,
+          label: old.label,
+          activeIcon:
+              (old.activeIcon as _BottomNavigationBadgeIconWrapper).icon,
+          backgroundColor: old.backgroundColor);
       items.removeAt(index);
       items.insert(index, _replacer);
+    } else {
+      // old.icon and old.activeIcon should always be wrapped at the same time
+      assert(!(old.icon is _BottomNavigationBadgeIconWrapper ||
+          old.activeIcon is _BottomNavigationBadgeIconWrapper));
     }
     return items;
   }
 
-  List removeAll(List items) {
-    for (var i = 0; i < items.length; i++) {
-      if (items[i].icon is Stack) {
-        BottomNavigationBarItem _replacer = BottomNavigationBarItem(
-            icon: items[i].icon.children[0],
-            label: items[i].label,
-            title: items[i].title,
-            label: items[i].label,
-            activeIcon: items[i].activeIcon.children[0],
-            backgroundColor: items[i].backgroundColor);
-        items.removeAt(i);
-        items.insert(i, _replacer);
-      }
-    }
+  List<BottomNavigationBarItem> removeAll(List<BottomNavigationBarItem> items) {
+    for (var i = 0; i < items.length; i++) items = removeBadge(items, i);
     return items;
   }
 }

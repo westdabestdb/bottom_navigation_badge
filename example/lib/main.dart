@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -34,11 +34,11 @@ class _MyHomePageState extends State<MyHomePage> {
       textSize: 8);
 
   List<BottomNavigationBarItem> items = [
-    BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("Home")),
-    BottomNavigationBarItem(icon: Icon(Icons.notifications), title: Text("Notifications")),
-    BottomNavigationBarItem(icon: Icon(Icons.face), title: Text("Profile"))
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+    BottomNavigationBarItem(icon: Icon(Icons.notifications), label: "Notifications"),
+    BottomNavigationBarItem(icon: Icon(Icons.face), label: "Profile")
   ];
-  int dropdownSelected = 0;
+  int? dropdownSelected = 0;
 
   int _current = 0;
 
@@ -67,14 +67,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                   child: DropdownButton(
                     isExpanded: true,
-                    hint: items[dropdownSelected].title,
+                    hint: Text(items[dropdownSelected!].label!),
                     items:items.map((BottomNavigationBarItem item) {
                       return new DropdownMenuItem(
                         value: items.indexOf(item),
-                        child: item.title,
+                        child: Text(item.label!),
                       );
                     }).toList(),
-                    onChanged: (int i){
+                    onChanged: (int? i){
                       setState(() {
                         dropdownSelected = i;
                       });
@@ -96,35 +96,32 @@ class _MyHomePageState extends State<MyHomePage> {
           Row(
             children: <Widget>[
               Expanded(
-                child: RaisedButton(
-                  elevation: 0,
+                child: ElevatedButton(
                   child: Text("Add Badge"),
                   onPressed: (){
                     String s = _textEditingController.text;
                     setState(() {
-                      items = badger.setBadge(items, s, dropdownSelected);
+                      items = badger.setBadge(items, s, dropdownSelected!) as List<BottomNavigationBarItem>;
                     });
                   },
                 ),
               ),
               Expanded(
-                child: RaisedButton(
-                  elevation: 0,
+                child: ElevatedButton(
                   child: Text("Remove"),
                   onPressed: (){
                     setState(() {
-                      items = badger.removeBadge(items, dropdownSelected);
+                      items = badger.removeBadge(items, dropdownSelected!) as List<BottomNavigationBarItem>;
                     });
                   },
                 ),
               ),
               Expanded(
-                child: RaisedButton(
-                  elevation: 0,
+                child: ElevatedButton(
                   child: Text("Remove All"),
                   onPressed: (){
                     setState(() {
-                      items = badger.removeAll(items);
+                      items = badger.removeAll(items) as List<BottomNavigationBarItem>;
                     });
                   },
                 ),
